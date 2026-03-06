@@ -217,7 +217,7 @@ export async function retryFailedDeliveries() {
         await db
           .update(webhookDelivery)
           .set({
-            status: newAttempts >= 3 ? "failed" : "failed",
+            status: newAttempts >= 3 ? "failed" : "pending",
             statusCode: res.status,
             attempts: newAttempts,
             lastAttemptAt: new Date().toISOString(),
