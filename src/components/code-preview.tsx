@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const tabs = ["curl", "Node.js", "Python", "Go"] as const;
 type Tab = (typeof tabs)[number];
@@ -216,28 +216,29 @@ function ResponseBlock({ animate }: { animate: boolean }) {
 
 export function CodePreview() {
   const [active, setActive] = useState<Tab>("curl");
-  const [hasAnimated, setHasAnimated] = useState(false);
-  const [showToast, setShowToast] = useState(false);
+  const initialTab = useRef(true);
+  const [toastPhase, setToastPhase] = useState<"hidden" | "visible" | "done">("hidden");
 
-  useEffect(() => {
-    if (!hasAnimated) setHasAnimated(true);
-  }, [hasAnimated]);
+  // Only animate curl on the very first render (before any tab switch)
+  const shouldAnimate = active === "curl" && initialTab.current;
 
+  function handleTabClick(tab: Tab) {
+    initialTab.current = false;
+    setActive(tab);
+  }
+
+  // Toast: show at 3s, hide at 5s
   useEffect(() => {
-    const timer = setTimeout(() => setShowToast(true), 2500);
-    return () => clearTimeout(timer);
+    const showTimer = setTimeout(() => setToastPhase("visible"), 3000);
+    const hideTimer = setTimeout(() => setToastPhase("done"), 5000);
+    return () => {
+      clearTimeout(showTimer);
+      clearTimeout(hideTimer);
+    };
   }, []);
 
-  useEffect(() => {
-    if (!showToast) return;
-    const timer = setTimeout(() => setShowToast(false), 2000);
-    return () => clearTimeout(timer);
-  }, [showToast]);
-
-  const shouldAnimate = active === "curl" && !hasAnimated;
-
   return (
-    <div className="mt-10 max-w-xl mx-auto relative">
+    <div className="mt-10 max-w-xl mx-auto relative overflow-visible">
       <div className="shadow-xl rounded-xl overflow-hidden">
         {/* Terminal bar with dots */}
         <div className="bg-[#2a2a2c] px-3.5 pt-2.5">
@@ -256,15 +257,15 @@ export function CodePreview() {
             />
           </div>
           {/* Tabs */}
-          <div className="flex gap-0 overflow-x-auto -mb-px">
+          <div className="flex gap-0 overflow-x-auto">
             {tabs.map((tab) => (
               <button
                 key={tab}
-                onClick={() => setActive(tab)}
-                className={`px-3 py-1.5 text-xs font-mono transition-colors shrink-0 border-b-2 ${
+                onClick={() => handleTabClick(tab)}
+                className={`px-3.5 py-1.5 text-xs font-mono transition-colors shrink-0 ${
                   active === tab
-                    ? "text-white bg-[#1D1D1F] border-accent"
-                    : "text-gray-500 hover:text-gray-300 border-transparent"
+                    ? "text-white font-medium bg-[#1D1D1F] rounded-t-md"
+                    : "text-[#636366] hover:text-[#A1A1AA]"
                 }`}
               >
                 {tab}
@@ -301,15 +302,15 @@ export function CodePreview() {
         </div>
       </div>
 
-      {/* Toast */}
+      {/* Toast notification */}
       <div
-        className={`absolute -bottom-4 right-4 rounded-lg bg-code-bg text-white text-sm px-4 py-2.5 shadow-lg flex items-center gap-2 transition-all duration-300 ${
-          showToast
+        className={`absolute bottom-4 right-4 rounded-lg bg-[#1D1D1F] text-white text-sm px-4 py-2.5 shadow-lg flex items-center gap-2 transition-all duration-300 ${
+          toastPhase === "visible"
             ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-2.5 pointer-events-none"
+            : "opacity-0 translate-y-2 pointer-events-none"
         }`}
       >
-        <svg className="w-4 h-4 text-success shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+        <svg className="w-4 h-4 text-[#34C759] shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
         </svg>
         API key copied to clipboard

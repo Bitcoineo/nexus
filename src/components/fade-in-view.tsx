@@ -33,7 +33,7 @@ export function FadeInView({
   return (
     <div
       ref={ref}
-      className={className}
+      className={`h-full ${className || ""}`}
       style={{
         opacity: 0,
         animation: visible ? `fadeInUp 400ms ease-out ${delay}ms forwards` : undefined,

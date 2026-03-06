@@ -105,7 +105,7 @@ export default async function LandingPage() {
               title="Authenticate"
               description="API keys with scopes. Hash on store. Show once."
               icon={
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3m3 0a6 6 0 0 1-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1 1 21.75 8.25z" />
                 </svg>
               }
@@ -113,8 +113,8 @@ export default async function LandingPage() {
           </FadeInView>
           <FadeInView delay={150}>
             <div className="h-full border border-border rounded-xl p-8 hover:border-accent/30 hover:-translate-y-1 hover:shadow-md transition-all duration-200">
-              <div className="w-10 h-10 rounded-xl bg-accent/[0.08] text-accent flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+              <div className="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
                 </svg>
               </div>
@@ -141,7 +141,7 @@ export default async function LandingPage() {
               title="Webhooks"
               description="HMAC-signed. Retry with backoff. Delivery logs."
               icon={
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
                 </svg>
               }
@@ -153,10 +153,7 @@ export default async function LandingPage() {
       {/* Testimonial */}
       <FadeInView>
         <section className="mt-16 py-16 bg-background-secondary">
-          <div className="max-w-2xl mx-auto px-6 text-center relative">
-            <span className="absolute -top-2 left-1/2 -translate-x-1/2 text-6xl text-accent/10 font-serif leading-none select-none">
-              &ldquo;
-            </span>
+          <div className="max-w-2xl mx-auto px-6 text-center">
             <blockquote className="text-lg sm:text-xl leading-relaxed text-foreground italic">
               We replaced 400 lines of auth middleware with Nexus. Keys, rate limits, and webhook delivery — all handled.
             </blockquote>
@@ -258,7 +255,7 @@ function FeatureCard({
 }) {
   return (
     <div className="h-full border border-border rounded-xl p-8 hover:border-accent/30 hover:-translate-y-1 hover:shadow-md transition-all duration-200">
-      <div className="w-10 h-10 rounded-xl bg-accent/[0.08] text-accent flex items-center justify-center">
+      <div className="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center">
         {icon}
       </div>
       <h3 className="mt-4 text-lg font-semibold">{title}</h3>
